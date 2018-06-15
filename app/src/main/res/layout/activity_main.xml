@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <Button
+                android:id="@+id/buttonrechts"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/buttonunten"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp"
+                android:text="R" />
+
+            <Button
+                android:id="@+id/buttonunten"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/buttondrehen"
+                android:layout_marginBottom="0dp"
+                android:text="U" />
+
+            <Button
+                android:id="@+id/buttondrehen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/buttonrechts"
+                android:layout_toStartOf="@+id/buttonrechts"
+                android:text="D" />
+
+            <Button
+                android:id="@+id/buttonlinks"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/buttonunten"
+                android:layout_toStartOf="@+id/buttonunten"
+                android:text="L" />
+
+            <TextView
+                android:id="@+id/textViewPunkte"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/textViewHighscore"
+                android:layout_marginEnd="31dp"
+                android:text="Punkte:"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/textViewHighscore"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:layout_above="@+id/buttondrehen"
+                android:text="Highscore:"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/levelText"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/textViewPunkte"
+                android:layout_marginBottom="182dp"
+                android:text="Level:" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7">
+
+            <Button
+                android:id="@+id/buttonstart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="51dp"
+                android:text="Start" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
