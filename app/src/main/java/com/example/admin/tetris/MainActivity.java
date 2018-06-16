@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView aktuellerLevelTextView;
     private Tetris tetris;
     private SpielsteinAnzeige spielsteinAnzeige;
-    private boolean pause = true;  // Spiel startet mit Button Klick
+    private boolean pause = true;
     private MediaPlayer mediaPlayer;
     private int stopMediaplayer;
     private SpielFeld spielFeld = new SpielFeld();
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
        mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource( this, Uri.parse("android.resource://com.example.admin.tetris/raw/tetrismusik"));

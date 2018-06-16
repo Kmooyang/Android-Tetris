@@ -1,8 +1,5 @@
 package com.example.admin.tetris;
 
-import android.graphics.Point;
-import java.util.ArrayList;
-
 public class Stein {
 
    public int farbcode;
@@ -11,7 +8,6 @@ public class Stein {
    public int x3, y3;
    public int x4, y4;
    private Stein stein;
-
 
   /*
   creates a copy Instances of Stein
@@ -23,6 +19,10 @@ public class Stein {
       this.x3= stein.x3; this.x4= stein.x4;
       this.y1= stein.y1; this.y2= stein.y2;
       this.y3= stein.y3; this.y4= stein.y4;
+  }
+
+  public int getFarbcode() {
+       return this.farbcode;
   }
 
     public Stein(int f) { // alle Steine um 1 nach unten veschoben // TODO enum for farbcode
@@ -91,107 +91,6 @@ public class Stein {
                 farbcode = 7;
                 break;
         }
-    }
-
-
-    public boolean verschiebarStein(Stein SpielStein, int x, int y) {
-        int tmp =0;
-
-        Point p1 = new Point(SpielStein.x1, SpielStein.y1);
-        Point p2 = new Point(SpielStein.x2, SpielStein.y2);
-        Point p3 = new Point(SpielStein.x3, SpielStein.y3);
-        Point p4 = new Point(SpielStein.x4, SpielStein.y4);
-
-        Point tmp1 = new Point(SpielStein.x1+x, SpielStein.y1+y);
-        Point tmp2 = new Point(SpielStein.x2+x, SpielStein.y2+y);
-        Point tmp3 = new Point(SpielStein.x3+x, SpielStein.y3+y);
-        Point tmp4 = new Point(SpielStein.x4+x, SpielStein.y4+y);
-
-        ArrayList<Point> steinKoordinaten = new ArrayList<Point>();
-        steinKoordinaten.add(tmp1);
-        steinKoordinaten.add(tmp2);
-        steinKoordinaten.add(tmp3);
-        steinKoordinaten.add(tmp4);
-
-        for(Point p : steinKoordinaten ) {
-
-            if(p.x< SpielFeld.getHöhe() && p.y>=0 && p.y< SpielFeld.getBreite() && SpielFeld.getSpielFeld()[p.x][p.y] ==0) {
-                tmp++;
-            }
-
-            else if(p.equals(p1) || p.equals(p2) || p.equals(p3) || p.equals(p4)) {
-                tmp++;
-            }
-        }
-
-        if(tmp==4) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean steinRotierbar(Stein SpielStein) {
-        int tmp =0;
-        ArrayList<Point> steinKoordinaten = new ArrayList<Point>();
-
-        Stein tmpStein = new Stein(SpielStein); //new Stein(stein);
-
-        Point p1 = new Point(SpielStein.x1, SpielStein.y1);
-        Point p2 = new Point(SpielStein.x2, SpielStein.y2);
-        Point p3 = new Point(SpielStein.x3, SpielStein.y3);
-        Point p4 = new Point(SpielStein.x4, SpielStein.y4);
-
-        tmpStein.dreheStein();
-
-        Point tmp1 = new Point(tmpStein.x1, tmpStein.y1);
-        Point tmp2 = new Point(tmpStein.x2, tmpStein.y2);
-        Point tmp3 = new Point(tmpStein.x3, tmpStein.y3);
-        Point tmp4 = new Point(tmpStein.x4, tmpStein.y4);
-
-        steinKoordinaten.add(tmp1);
-        steinKoordinaten.add(tmp2);
-        steinKoordinaten.add(tmp3);
-        steinKoordinaten.add(tmp4);
-
-        for(Point p : steinKoordinaten ) {
-
-            if(p.x< SpielFeld.getHöhe()&& p.x>=0 && p.y>=0 && p.y< SpielFeld.getBreite() && (SpielFeld.SpielFeld)[p.x][p.y] ==0) {
-                tmp++;
-            }
-
-            else if(p.equals(p1) || p.equals(p2) || p.equals(p3) || p.equals(p4)) {
-                tmp++;
-            }
-        }
-
-        if(tmp==4) { // Stein lässt sich nach unten verschieben
-            return true;
-        }
-        return false;
-    }
-
-
-
-    public  boolean nachLinksverschiebar(Stein SpielStein) {
-        if(SpielStein.verschiebarStein(SpielStein, 0, -1)==true) {  // und nachUntenverschieber?
-            return true;
-        }
-        return false;
-    }
-
-    public  boolean nachRechtsverschiebar(Stein SpielStein){
-        if(SpielStein.verschiebarStein(SpielStein, 0,1) == true) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean nachUntenverschiebar(Stein SpielStein) {
-
-        if(SpielStein.verschiebarStein(SpielStein, 1,0)==true) {
-            return true;
-        }
-        return false;
     }
 
     public void verschieben(int x, int y) {

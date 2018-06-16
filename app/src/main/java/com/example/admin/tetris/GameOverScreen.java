@@ -21,7 +21,6 @@ public class GameOverScreen extends AppCompatActivity implements View.OnTouchLis
     private ZeichenView zw ;
     private RelativeLayout layout;
 
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);

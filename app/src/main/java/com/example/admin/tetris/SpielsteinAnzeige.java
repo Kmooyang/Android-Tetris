@@ -20,7 +20,7 @@ public class SpielsteinAnzeige extends View {
     private Bitmap j_Teil = BitmapFactory.decodeResource(getResources(), R.drawable.jteil);
     private Bitmap l_Teil = BitmapFactory.decodeResource(getResources(), R.drawable.lteil);
     private Bitmap i_Teil = BitmapFactory.decodeResource(getResources(), R.drawable.iteil);
-
+    private int array[][] = new int[10][10];
 
     private Random random = new Random();
 
@@ -33,7 +33,6 @@ public class SpielsteinAnzeige extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         steinList = spielFeld.getSteinListe();
 
         if (steinList.size() > 0) {

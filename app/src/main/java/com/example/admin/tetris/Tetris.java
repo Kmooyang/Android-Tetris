@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.graphics.Color;
@@ -83,7 +84,7 @@ public void gameLoop() {
                            spielFeld.nachUnten(spielFeld.aktuellerStein()); // getCurrrentPiece
                            spielFeld.nächsterStein(); // nächsten Stein anzeigen
 
-                        if (spielFeld.aktuellerStein().nachUntenverschiebar(spielFeld.aktuellerStein()) == false) {
+                        if (spielFeld.nachUntenverschiebar(spielFeld.aktuellerStein()) == false) {
                             int gelöschteReihen = spielFeld.löscheReihe();
                             steinListe.remove(spielFeld.aktuellerStein());
                             steinListe.add(new Stein(random.nextInt(7) + 1));
@@ -120,14 +121,15 @@ public void gameLoop() {
 }
 
 public boolean istGameOver() {
-    if( spielFeld.checkGameOver(spielFeld.aktuellerStein())==true ) {
-        timer.cancel();
-        steinListe.clear();
-        spielFeld.clearSpielFeld();
-        mainActivity.setPause(true);
-        mediaPlayer.stop();
-        zeigeGameOverScreen();
-    return true;
+
+        if( spielFeld.checkGameOver(spielFeld.aktuellerStein())==true ) {
+            timer.cancel();
+            steinListe.clear();
+            spielFeld.clearSpielFeld();
+            mainActivity.setPause(true);
+            mediaPlayer.stop();
+            zeigeGameOverScreen();
+            return true;
     }
     return false;
     }
@@ -139,53 +141,17 @@ public void zeigeGameOverScreen() {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int Feld[][] = SpielFeld.getSpielFeld();
+        int[][] Feld= spielFeld.getSpielFeld();
 
         super.onDraw(canvas);
         Paint p = new Paint();
-        p.setColor(Color.BLUE);
 
-        for (int a = 0; a < SpielFeld.getHöhe(); a++) {
-            for (int b = 0; b < SpielFeld.getBreite(); b++) {
+        for (int a = 0; a < spielFeld.getHöhe(); a++) {
+            for (int b = 0; b < spielFeld.getBreite(); b++) {
 
-               if(Feld[a][b]==0) {
-                   p.setColor(Color.YELLOW);
-                   canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-               }
-
-                if (Feld[a][b] == 1) {
-                    p.setColor(Color.RED);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-
-                if(Feld[a][b]==2) {
-                p.setColor(Color.GREEN);
-                canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-
-                if (Feld[a][b] == 3) {
-                    p.setColor(Color.BLUE);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-
-                if(Feld[a][b]==4) {
-                    p.setColor(Color.GRAY);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-
-                if (Feld[a][b] == 5) {
-                    p.setColor(Color.CYAN);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-                if(Feld[a][b]==6) {
-                    p.setColor(Color.BLACK);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
-
-                if(Feld[a][b]==7) {
-                    p.setColor(Color.MAGENTA);
-                    canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
-                }
+              int color  = spielFeld.codeToColor(a,b);
+              p.setColor(color);
+              canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
             }
         }
     }
