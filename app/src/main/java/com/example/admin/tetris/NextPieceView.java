@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +18,8 @@ public class NextPieceView extends View {
 
     private GameBoard gameBoard;
     private ArrayList<Piece> pieceList;
-    private Bitmap squarePiece = BitmapFactory.decodeResource(getResources(), R.drawable.squarepiece);
+
+    private Bitmap squarePiece = BitmapFactory.decodeResource(getResources(), R.drawable.square);
     private Bitmap tPiece = BitmapFactory.decodeResource(getResources(), R.drawable.tpiece);
     private Bitmap zPiece = BitmapFactory.decodeResource(getResources(), R.drawable.zpiece);
     private Bitmap sPiece = BitmapFactory.decodeResource(getResources(), R.drawable.spiece);
@@ -37,10 +39,10 @@ public class NextPieceView extends View {
         Paint p = new Paint();
 
         if (pieceList.size() > 0) {
-            Piece s = gameBoard.getNextPiece(); //steinList.get(steinList.size() - 1);
+            Piece s = gameBoard.getNextPiece();
 
             if (s.colorCode == 1) {
-                canvas.drawBitmap(squarePiece, 0, 0, p);
+               canvas.drawBitmap(squarePiece, 0, 0, p);
             }
 
             if (s.colorCode == 2) {
@@ -52,7 +54,7 @@ public class NextPieceView extends View {
             }
 
             if (s.colorCode == 4) {
-                canvas.drawBitmap(tPiece, 0, 0, p);
+               canvas.drawBitmap(tPiece, 0, 0, p);
             }
 
             if (s.colorCode == 5) {
@@ -66,6 +68,7 @@ public class NextPieceView extends View {
             if (s.colorCode == 7) {
                 canvas.drawBitmap(lPiece, 0, 0, p);
             }
+
         }
     }
 }
