@@ -7,25 +7,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonStart;
-    private Button drehen;
-    private Button rechts;
-    private Button unten;
-    private Button links;
-    private TextView PunkteTextView;
+    private ImageButton rotateButton;
+    private ImageButton rightButton;
+    private ImageButton downButton;
+    private ImageButton leftButton;
+
+    private TextView pointTextView;
     private TextView highscoreLevelTextView;
-    private TextView aktuellerLevelTextView;
+    private TextView currentLevelTextView;
     private Tetris tetris;
-    private SpielsteinAnzeige spielsteinAnzeige;
+    private NextPieceView nextPieceView;
     private boolean pause = true;
     private MediaPlayer mediaPlayer;
     private int stopMediaplayer;
-    private SpielFeld spielFeld = new SpielFeld();
+    private GameBoard gameBoard = new GameBoard();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         buttonStart = (Button) findViewById(R.id.buttonstart);
-        drehen = (Button) findViewById(R.id.buttondrehen);
-        rechts = (Button) findViewById(R.id.buttonrechts);
-        unten = (Button) findViewById(R.id.buttonunten);
-        links = (Button) findViewById(R.id.buttonlinks);
-        PunkteTextView = (TextView) findViewById(R.id.textViewPunkte);
+        rotateButton = (ImageButton) findViewById(R.id.rotateButton);
+        rightButton = (ImageButton) findViewById(R.id.rightButton);
+        downButton = (ImageButton) findViewById(R.id.downButton);
+        leftButton = (ImageButton) findViewById(R.id.leftButton);
+        pointTextView = (TextView) findViewById(R.id.textViewPunkte);
         highscoreLevelTextView= (TextView) findViewById(R.id.textViewHighscore);
-        aktuellerLevelTextView = (TextView) findViewById(R.id.levelText);
+        currentLevelTextView = (TextView) findViewById(R.id.levelText);
 
-        spielsteinAnzeige = new SpielsteinAnzeige(this, spielFeld);
+        nextPieceView = new NextPieceView(this, gameBoard);
         RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(300,300);
-        spielsteinAnzeige.setLayoutParams(params1);
+        nextPieceView.setLayoutParams(params1);
         RelativeLayout relativeSteinAnzeige = (RelativeLayout) findViewById(R.id.relativelayout1);
-        spielsteinAnzeige.setBackgroundColor(Color.GREEN);
-        relativeSteinAnzeige.addView(spielsteinAnzeige);
+        nextPieceView.setBackgroundColor(Color.YELLOW);
+        relativeSteinAnzeige.addView(nextPieceView);
 
-        tetris = new Tetris(this,spielsteinAnzeige, spielFeld);
+        tetris = new Tetris(this,nextPieceView, gameBoard);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(480, 900);
         tetris.setLayoutParams(params);
         RelativeLayout relativeTetris = (RelativeLayout) findViewById(R.id.relativelayout);
@@ -115,15 +117,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-public Button getButtonRechts() { return rechts;}
-public Button getButtonUnten() { return unten;}
-public Button getButtonLinks() { return links;}
-public Button getButtonDrehen() { return drehen; }
+    public ImageButton getRightButton() { return rightButton;}
+    public ImageButton getDownButton() { return downButton;}
+    public ImageButton getLeftButton() { return leftButton;}
+    public ImageButton getRotateButton() { return rotateButton; }
 
     public boolean getPause() {  return pause;}
     public void setPause(boolean pause) { this.pause=pause;}
-    public TextView getHighscoreLevelTextview() { return highscoreLevelTextView; }
-    public TextView getPunkteTextview() { return PunkteTextView; }
-    public TextView getAktuellerLevelTextView() { return aktuellerLevelTextView;}
+    public TextView getHighscoreLevelTextView() { return highscoreLevelTextView; }
+    public TextView getPointTextView() { return pointTextView; }
+    public TextView getCurrentLevelTextView() { return currentLevelTextView;}
     public MediaPlayer getMediaPlayer() {  return mediaPlayer; }
 }

@@ -25,39 +25,39 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3">
 
-            <Button
-                android:id="@+id/buttonrechts"
+            <ImageButton
+                android:id="@+id/rightButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_above="@+id/buttonunten"
+                android:layout_above="@+id/downButton"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="40dp"
-                android:text="R" />
+                android:src="@drawable/arrowright"/>
 
-            <Button
-                android:id="@+id/buttonunten"
+            <ImageButton
+                android:id="@+id/downButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/buttondrehen"
+                android:layout_alignStart="@+id/rotateButton"
                 android:layout_marginBottom="0dp"
-                android:text="U" />
+                android:src="@drawable/arrowdown" />
 
-            <Button
-                android:id="@+id/buttondrehen"
+            <ImageButton
+                android:id="@+id/rotateButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_above="@+id/buttonrechts"
-                android:layout_toStartOf="@+id/buttonrechts"
-                android:text="D" />
+                android:layout_above="@+id/rightButton"
+                android:layout_toStartOf="@+id/rightButton"
+                android:src="@drawable/arrowup" />
 
-            <Button
-                android:id="@+id/buttonlinks"
+            <ImageButton
+                android:id="@+id/leftButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_above="@+id/buttonunten"
-                android:layout_toStartOf="@+id/buttonunten"
-                android:text="L" />
+                android:layout_above="@+id/downButton"
+                android:layout_toStartOf="@+id/downButton"
+                android:src="@drawable/arrowleft" />
 
             <TextView
                 android:id="@+id/textViewPunkte"
@@ -73,7 +73,7 @@
                 android:id="@+id/textViewHighscore"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
-                android:layout_above="@+id/buttondrehen"
+                android:layout_above="@+id/rotateButton"
                 android:text="Highscore:"
                 android:textSize="13dp" />
 

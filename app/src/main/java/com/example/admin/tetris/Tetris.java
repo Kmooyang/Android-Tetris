@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.graphics.Color;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,53 +16,53 @@ import java.util.TimerTask;
 public class Tetris extends View implements View.OnClickListener{
 
     private MediaPlayer mediaPlayer;
-    private SpielFeld spielFeld;
+    private GameBoard gameBoard;
     private MainActivity mainActivity;
-    private Button drehen;
-    private Button rechts;
-    private Button unten;
-    private Button links;
+    private ImageButton rotateButton;
+    private ImageButton rightButton;
+    private ImageButton downButton;
+    private ImageButton leftButton;
     private  Timer timer = new Timer();
     private Random random = new Random();
-    private  ArrayList<Stein> steinListe;// = spielFeld.getpieceList();
-    private SpielsteinAnzeige spielsteinAnzeige;
-    private TextView aktuellerLevelTextView;
+    private  ArrayList<Piece> pieceList;
+    private NextPieceView nextPieceView;
+    private TextView currentLevelTextView;
     private TextView highscoreLevelTextView;
-    private TextView aktuellePunkteTextView;
-    private Punkte punkte;
+    private TextView currentPunkteTextView;
+    private Points points;
     private final int score=10;
-    private int timerZyklus =250; // Timer Aufruf
+    private int timerPeriod =250;
     private int level=0;
     private boolean pause;
 
-    public Tetris(Context context, SpielsteinAnzeige spielsteinAnzeige, SpielFeld spielFeld) {
+    public Tetris(Context context, NextPieceView nextPieceView, GameBoard gameBoard) {
         super(context);
 
         this.mainActivity = (MainActivity) context;
-        this.spielsteinAnzeige=spielsteinAnzeige;
-        this.spielFeld =  spielFeld;
+        this.nextPieceView=nextPieceView;
+        this.gameBoard =  gameBoard;
         pause = mainActivity.getPause();
-        steinListe = spielFeld.getSteinListe();
+        pieceList = gameBoard.getPieceList();
         mediaPlayer = mainActivity.getMediaPlayer();
-        punkte = new Punkte(context);
+        points = new Points(context);
 
-        aktuellerLevelTextView = mainActivity.getAktuellerLevelTextView();
-        highscoreLevelTextView = mainActivity.getHighscoreLevelTextview();
-        aktuellePunkteTextView = mainActivity.getPunkteTextview();
+        currentLevelTextView = mainActivity.getCurrentLevelTextView();
+        highscoreLevelTextView = mainActivity.getHighscoreLevelTextView();
+        currentPunkteTextView = mainActivity.getPointTextView();
 
-        aktuellerLevelTextView.append("0");
-        aktuellePunkteTextView.append("0");
-        highscoreLevelTextView.append(""+punkte.ladeHighscore());
+        currentLevelTextView.append("0");
+        currentPunkteTextView.append("0");
+        highscoreLevelTextView.append(""+points.loadHighscore());
 
-        drehen = mainActivity.getButtonDrehen();
-        rechts = mainActivity.getButtonRechts();
-        unten = mainActivity.getButtonUnten();
-        links = mainActivity.getButtonLinks();
+        rotateButton = mainActivity.getRotateButton();
+        rightButton = mainActivity.getRightButton();
+        downButton = mainActivity.getDownButton();
+        leftButton = mainActivity.getLeftButton();
 
-        drehen.setOnClickListener(this);
-        rechts.setOnClickListener(this);
-        unten.setOnClickListener(this);
-        links.setOnClickListener(this);
+        rotateButton .setOnClickListener(this);
+        rightButton.setOnClickListener(this);
+        downButton.setOnClickListener(this);
+        leftButton.setOnClickListener(this);
         gameLoop();
     }
 
@@ -79,34 +77,34 @@ public void gameLoop() {
                 @Override
                 public void run() {
 
-                   if(istGameOver()==false && mainActivity.getPause()==false ) {
+                   if(gameOver()==false && mainActivity.getPause()==false ) {
 
-                           spielFeld.nachUnten(spielFeld.aktuellerStein()); // getCurrrentPiece
-                           spielFeld.nächsterStein(); // nächsten Stein anzeigen
+                           gameBoard.moveDown(gameBoard.getCurrentPiece());
 
-                        if (spielFeld.nachUntenverschiebar(spielFeld.aktuellerStein()) == false) {
-                            int gelöschteReihen = spielFeld.löscheReihe();
-                            steinListe.remove(spielFeld.aktuellerStein());
-                            steinListe.add(new Stein(random.nextInt(7) + 1));
-                            spielsteinAnzeige.invalidate();
+                        if (gameBoard.can_Move_Down(gameBoard.getCurrentPiece()) == false) {
+                            int deletedRows = gameBoard.clearRows();
+                            gameBoard.clearRows();
+                            pieceList.remove(gameBoard.getCurrentPiece());
+                            pieceList.add(new Piece(random.nextInt(7) + 1));
+                            nextPieceView.invalidate();
 
-                            if (gelöschteReihen > 0) {
-                                punkte.setAktuellePunkte(punkte.getAktuellePunkte() + gelöschteReihen * score);
-                                int tmp = punkte.getAktuellePunkte();
-                                punkte.setLevel();
+                            if (deletedRows> 0) {
+                                points.setCurrentPoints(points.getCurrentPoints() + deletedRows * score);
+                                int p = points.getCurrentPoints();
+                                points.setLevel();
 
-                                aktuellePunkteTextView.setText("Punkte:" +" "+ tmp);
-                                aktuellerLevelTextView.setText("Level" +" "+ punkte.getLevel());
+                                currentPunkteTextView.setText("Points:" +" "+ p);
+                                currentLevelTextView.setText("Level" +" "+ points.getLevel());
 
-                                if (punkte.getLevel() > punkte.ladeHighscore()) {
-                                    punkte.schreibeHighscore();
-                                    highscoreLevelTextView.setText("Highscore:" +" "+ punkte.getLevel());
+                                if (points.getLevel() > points.loadHighscore()) {
+                                    points.writeHighscore();
+                                    highscoreLevelTextView.setText("Highscore:" +" "+ points.getLevel());
                                 }
                             }
 
-                            if(punkte.getLevel()>level) {
+                            if(points.getLevel()>level) {
                                level++;
-                               timerZyklus = timerZyklus - (punkte.getLevel()*20);
+                               timerPeriod = timerPeriod - (points.getLevel()*20);
                                timer.cancel();
                                timer = new Timer();
                                gameLoop();
@@ -116,68 +114,74 @@ public void gameLoop() {
                     }
                 }
             });
-        }
-    }, 0, timerZyklus);
-}
+         }
+     }, 0, timerPeriod);
+    }
 
-public boolean istGameOver() {
+    public boolean gameOver() {
 
-        if( spielFeld.checkGameOver(spielFeld.aktuellerStein())==true ) {
+        if( gameBoard.checkGameOver(gameBoard.getCurrentPiece())==true ) {
             timer.cancel();
-            steinListe.clear();
-            spielFeld.clearSpielFeld();
+            pieceList.clear();
+            gameBoard.clearGameBoard();
             mainActivity.setPause(true);
             mediaPlayer.stop();
-            zeigeGameOverScreen();
+            showGameOverScreen();
             return true;
     }
     return false;
     }
 
-public void zeigeGameOverScreen() {
-  Intent intent = new Intent(this.getContext(), GameOverScreen.class);
-  getContext().startActivity(intent);
-}
+    public void showGameOverScreen() {
+     Intent intent = new Intent(this.getContext(), GameOverScreen.class);
+     getContext().startActivity(intent);
+   }
 
+/*
+change colorCode to spezific Color and paint on GAmeboard
+ */
     @Override
     protected void onDraw(Canvas canvas) {
-        int[][] Feld= spielFeld.getSpielFeld();
 
         super.onDraw(canvas);
         Paint p = new Paint();
 
-        for (int a = 0; a < spielFeld.getHöhe(); a++) {
-            for (int b = 0; b < spielFeld.getBreite(); b++) {
+        for (int x = 0; x < gameBoard.getBoardHeight(); x++) {
+            for (int y = 0; y < gameBoard.getBoardWidth(); y++) {
 
-              int color  = spielFeld.codeToColor(a,b);
+              int color  = gameBoard.codeToColor(x,y);
               p.setColor(color);
-              canvas.drawRect(b*30, a*30, b*30+30, a*30+30,p);
+              canvas.drawRect(y*30, x*30, y*30+30, x*30+30,p);
             }
         }
     }
+
+    /*
+    control falling pieces with buttons
+     */
 
     @Override
     public void onClick(View v) {
        if(mainActivity.getPause()==false) {
 
         switch(v.getId()) {
-            case R.id.buttonrechts:
-                spielFeld.nachRechtsverschieben(spielFeld.aktuellerStein());
+            case R.id.rightButton:
+                gameBoard.moveRight(gameBoard.getCurrentPiece());
                 invalidate();
                 break;
-            case R.id.buttonunten:
-                spielFeld.steinSchnellFallen(spielFeld.aktuellerStein());
+            case R.id.downButton:
+                gameBoard.fastDrop(gameBoard.getCurrentPiece());
                 invalidate();
                 break;
-            case R.id.buttonlinks:
-                spielFeld.nachLinksverschieben(spielFeld.aktuellerStein());
+            case R.id.leftButton:
+                gameBoard.moveLeft(gameBoard.getCurrentPiece());
                 invalidate();
                 break;
-            case R.id.buttondrehen:
-                spielFeld.rotiereStein(spielFeld.aktuellerStein());
+            case R.id.rotateButton:
+                gameBoard.rotatePiece(gameBoard.getCurrentPiece());
                 invalidate();
                 break;
-        }
+           }
+         }
        }
-    }
-}
+     }
