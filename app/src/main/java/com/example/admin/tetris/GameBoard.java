@@ -1,12 +1,12 @@
 package com.example.admin.tetris;
 
-import android.graphics.Color;
-import android.graphics.Point;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+    import android.graphics.Color;
+    import android.graphics.Point;
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.Random;
 
-public class GameBoard {
+    public class GameBoard {
 
    	 private final int boardHeight =30;
      private final int boardWidth=16;
@@ -118,10 +118,10 @@ public class GameBoard {
         return false;
     }
 
-    /*
-    copy current Piece and check if it can rotate
-    if true return true
-     */
+     /*
+     copy current Piece and check if it can rotate
+     if true return true
+      */
 
     private boolean piece_Can_Rotate(Piece currentPiece) {
         int tmp =0;
@@ -293,4 +293,4 @@ public class GameBoard {
     public int getBoardWidth() {
         return this.boardWidth;
     }
-}
+    }
