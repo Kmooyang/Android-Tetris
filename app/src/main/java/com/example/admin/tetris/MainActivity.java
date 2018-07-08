@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonStart;
+    private Button buttonReset;
     private ImageButton rotateButton;
     private ImageButton rightButton;
     private ImageButton downButton;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         buttonStart = (Button) findViewById(R.id.buttonstart);
+        buttonReset = (Button) findViewById(R.id.buttonreset);
         rotateButton = (ImageButton) findViewById(R.id.rotateButton);
         rightButton = (ImageButton) findViewById(R.id.rightButton);
         downButton = (ImageButton) findViewById(R.id.downButton);
@@ -91,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               tetris.resetGame();
+            }
+        });
+
     }
 
     @Override
@@ -116,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
+    public Button getResetButton() { return buttonReset;}
     public ImageButton getRightButton() { return rightButton;}
     public ImageButton getDownButton() { return downButton;}
     public ImageButton getLeftButton() { return leftButton;}

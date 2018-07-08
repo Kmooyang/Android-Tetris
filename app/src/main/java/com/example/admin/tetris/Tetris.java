@@ -132,6 +132,17 @@ public void gameLoop() {
     return false;
     }
 
+    public void resetGame() {
+        timer.cancel();
+        pieceList.clear();
+        gameBoard.clearGameBoard();
+        mainActivity.setPause(true);
+        mediaPlayer.stop();
+        invalidate();
+        Intent intent = new Intent(this.getContext(), MainActivity.class);
+        getContext().startActivity(intent);
+    }
+
     public void showGameOverScreen() {
      Intent intent = new Intent(this.getContext(), GameOverScreen.class);
      getContext().startActivity(intent);
@@ -184,4 +195,9 @@ change colorCode to spezific Color and paint on GAmeboard
            }
          }
        }
+
+       public Timer getTimer() {
+        return this.timer;
+       }
+
      }
