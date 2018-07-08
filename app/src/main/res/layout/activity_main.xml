@@ -49,7 +49,7 @@
                 android:layout_height="50dp"
                 android:layout_above="@+id/rightButton"
                 android:layout_toStartOf="@+id/rightButton"
-                android:src="@drawable/arrowup" />
+                android:src="@drawable/arrowrotate" />
 
             <ImageButton
                 android:id="@+id/leftButton"
